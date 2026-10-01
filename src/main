@@ -1,0 +1,29 @@
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include "analysis.h"
+#include "report.h"
+
+int main(int argc, char *argv[]) {
+	if (argc != 2) {
+		fprintf(stderr, "Usage: %s <input_file>", argv[0]);
+		return 1;
+	}
+
+	char *filename = argv[1];
+	FILE *file = fopen(filename, "r");
+	if (!file) {
+		fprintf(stderr, "Error opening file %s\n", filename);
+		return 1;
+	}
+
+	// Perform static analysis
+	void *result = analyze_file(file);
+
+	// Generate report
+	generate_report(result, filename);
+
+	fclose(file);
+	return 0;
+}
+```
